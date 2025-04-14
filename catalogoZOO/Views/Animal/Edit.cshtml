@@ -3,7 +3,69 @@
 @{
     ViewData["Title"] = "Editando dados de animal";
 }
+<style>
+        body {
+            font-family: sans-serif;
+            background-color: #ffb48a; /* Cor de fundo mais clara */
+            
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 100vh;
+            margin: 0;
+        }
+        /*
+        .container {
+            background-color: #c57d56;  Container principal 
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        */
+        h2 {
+            color: #320000; /* Título principal */
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            color: #5d2417; /* Rótulos dos campos */
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #8d4925; /* Borda dos campos */
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #320000; /* Cor do botão */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+            button:hover {
+                background-color: #5d2417;
+            }
+    </style>
 <h1>Editando</h1>
 
 <h4>Animal</h4>

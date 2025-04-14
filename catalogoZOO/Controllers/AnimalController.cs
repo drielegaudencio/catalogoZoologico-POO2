@@ -50,7 +50,7 @@ namespace catalogoZOO.Controllers
 
             return View(animal);
         }
-
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -64,6 +64,9 @@ namespace catalogoZOO.Controllers
             }
             return View(animal);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("AnimalId", "Nome", "Especie", "Habitat", "Genero", "Idade")] Animal animal)
         {
             if (id != animal.AnimalId)
@@ -92,6 +95,30 @@ namespace catalogoZOO.Controllers
             }
             return View(animal);
         }
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var animal = await _context.Animals.SingleOrDefaultAsync(a => a.AnimalId == id);
+            if (animal == null)
+            {
+                return NotFound();
+            }
+            return View(animal);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var animal = await _context.Animals.FindAsync(id);
+            _context.Animals.Remove(animal);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
 
         public bool AnimalExists(int id)
         {

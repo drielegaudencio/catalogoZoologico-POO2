@@ -1,0 +1,166 @@
+﻿@model catalogoZOO.Model.Animal
+
+@{
+    ViewData["Title"] = "Detalhes do Animal";
+}
+
+<style>
+    body {
+        font-family: sans-serif;
+        background-color: #ffb48a; /* Cor de fundo mais clara */
+
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 100vh;
+        margin: 0;
+    }
+    /*
+            .container {
+                background-color: #c57d56;  Container principal
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                width: 400px;
+            }
+            */
+    h2 {
+        color: #320000; /* Título principal */
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        color: #5d2417; /* Rótulos dos campos */
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+        width: calc(100% - 12px);
+        padding: 8px;
+        border: 1px solid #8d4925; /* Borda dos campos */
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+
+    button {
+        background-color: #320000; /* Cor do botão */
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+    }
+
+        button:hover {
+            background-color: #5d2417;
+        }
+</style>
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h4>Animal</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Especie)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Especie)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Habitat)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Habitat)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Genero)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Genero)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Idade)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Idade)
+        </dd>
+
+        @if (Model is catalogoZOO.Model.Mamiferos mamifero)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => mamifero.Pelagem)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => mamifero.Pelagem)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => mamifero.TempoGestacao)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => mamifero.TempoGestacao)
+            </dd>
+        }
+
+        @if (Model is catalogoZOO.Model.Repteis reptil)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => reptil.TipoDeEscamas)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => reptil.TipoDeEscamas)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => reptil.Venenoso)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => reptil.Venenoso)
+            </dd>
+        }
+
+        @if (Model is catalogoZOO.Model.Aves ave)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => ave.EnvergaduraAsa)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => ave.EnvergaduraAsa)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => ave.TipoBico)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => ave.TipoBico)
+            </dd>
+        }
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.AnimalId">Editar</a> |
+    <a asp-action="Index">Retornar para a lista de animais</a>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="AnimalId" />
+    <input type="submit" value="Confirmar Exclusao" class="btn btn-danger" />
+</form>
