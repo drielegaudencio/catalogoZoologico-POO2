@@ -38,9 +38,9 @@ namespace catalogoZOO.Data
                 .IsRequired();
 
             // Configura a chave primária para as tabelas derivadas (geralmente herdada de AnimalId)
-            modelBuilder.Entity<Mamiferos>().HasKey(m => m.AnimalId);
+            /*modelBuilder.Entity<Mamiferos>().HasKey(m => m.AnimalId);
             modelBuilder.Entity<Repteis>().HasKey(r => r.AnimalId);
-            modelBuilder.Entity<Aves>().HasKey(a => a.AnimalId);
+            modelBuilder.Entity<Aves>().HasKey(a => a.AnimalId);*/
 
             // Configura a chave primária para a tabela base Animal
             modelBuilder.Entity<Animal>().HasKey(a => a.AnimalId);
