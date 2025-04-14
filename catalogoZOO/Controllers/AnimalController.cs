@@ -13,17 +13,17 @@ namespace catalogoZOO.Controllers
         {
             _context = context;
         }
-        /*private static List<Animal> animais = new List<Animal>()
+        public async Task<IActionResult> Index()
         {
-            new Animal() {
-                AnimalId = 1,
-                Nome = "Cleo",
-                Especie = "Felino",
-                Habitat = "florestas tropicais",
-                Genero = "Female",
-                Idade = 5
-            }
-        };*/
+            return View(await _context.Animals.OrderBy(a => a.Nome).ToListAsync());
+        }
+        /*
+        public async Task<IActionResult> Index()
+        {
+            //return View(await _context.Animals.OrderBy(a => a.Nome).ToListAsync());
+            //return View(await _context.Animals.OrderBy(a => a.Nome).ToListAsync().ConfigureAwait(false));
+            return View(await _context.Animals.OrderBy(a => a.Nome).ToListAsync().ConfigureAwait(false));
+        }*/
 
         public IActionResult Create()
         {
@@ -40,7 +40,7 @@ namespace catalogoZOO.Controllers
                 {
                     _context.Add(animal);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(IndexAsync));
+                    return RedirectToAction(nameof(Index));
                 }
             }
             catch (Exception ex)
@@ -50,10 +50,49 @@ namespace catalogoZOO.Controllers
 
             return View(animal);
         }
-        public async Task<IActionResult> IndexAsync()
+
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View(await _context.Animals.OrderBy(a => a.Nome).ToListAsync());
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var animal = await _context.Animals.FindAsync(id);
+            if (animal == null)
+            {
+                return NotFound();
+            }
+            return View(animal);
         }
+        public async Task<IActionResult> Edit(int id, [Bind("AnimalId", "Nome", "Especie", "Habitat", "Genero", "Idade")] Animal animal)
+        {
+            if (id != animal.AnimalId)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(animal);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AnimalExists(animal.AnimalId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(animal);
+        }
+
         public bool AnimalExists(int id)
         {
             return _context.Animals.Any(e => e.AnimalId == id);

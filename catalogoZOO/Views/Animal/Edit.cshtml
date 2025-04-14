@@ -1,0 +1,98 @@
+﻿@model catalogoZOO.Model.Animal
+
+@{
+    ViewData["Title"] = "Editando dados de animal";
+}
+
+<h1>Editando</h1>
+
+<h4>Animal</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AnimalId" />
+            <div class="form-group">
+                <label asp-for="Nome">Nome:</label>
+                <input asp-for="Nome" type="text" id="Nome" name="Nome" required placeholder="">
+            </div>
+
+            <div class="form-group">
+                <label for="especie">Espécie:</label>
+                <select id="especie" name="Especie" class="form-control" onchange="mostrarCamposEspecificos()">
+                    <option value="">Selecione</option>
+                    <option value="Mamifero">Mamífero</option>
+                    <option value="Reptil">Réptil</option>
+                    <option value="Ave">Ave</option>
+                </select>
+            </div>
+
+            <div id="camposMamifero" style="display: none;">
+                <div class="form-group">
+                    <label for="pelagem">Pelagem:</label>
+                    <input type="text" id="pelagem" name="Pelagem" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="tempoGestacao">Tempo de Gestação (dias):</label>
+                    <input type="number" id="tempoGestacao" name="TempoGestacao" class="form-control">
+                </div>
+            </div>
+
+            <div id="camposReptil" style="display: none;">
+                <div class="form-group">
+                    <label for="tipoDeEscamas">Tipo de Escamas:</label>
+                    <input type="text" id="tipoDeEscamas" name="TipoDeEscamas" class="form-control">
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="venenoso" name="Venenoso" class="form-check-input">
+                    <label class="form-check-label" for="venenoso">Venenoso</label>
+                </div>
+            </div>
+
+            <div id="camposAve" style="display: none;">
+                <div class="form-group">
+                    <label for="envergaduraAsa">Envergadura da Asa (cm):</label>
+                    <input type="number" id="envergaduraAsa" name="EnvergaduraAsa" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="tipoBico">Tipo de Bico:</label>
+                    <input type="text" id="tipoBico" name="TipoBico" class="form-control">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Habitat">Habitat:</label>
+                <input asp-for="Habitat" type="text" id="Habitat" name="Habitat">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Idade">Idade:</label>
+                <input asp-for="Idade" type="number" id="Idade" name="Idade" min="0">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Genero">Gênero:</label>
+                <select asp-for="Genero" id="Genero" name="Genero">
+                    <option value="M">Macho</option>
+                    <option value="F">Fêmea</option>
+                    <option value="O">Outro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar a Listagem</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
