@@ -1,0 +1,174 @@
+﻿@model catalogoZOO.Model.Animal
+@{
+    ViewData["Title"] = "Create";
+}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Animal</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #ffb48a; /* Cor de fundo mais clara */
+            
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 100vh;
+            margin: 0;
+        }
+        /*
+        .container {
+            background-color: #c57d56;  Container principal 
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        */
+        h2 {
+            color: #320000; /* Título principal */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            color: #5d2417; /* Rótulos dos campos */
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #8d4925; /* Borda dos campos */
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #320000; /* Cor do botão */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+            button:hover {
+                background-color: #5d2417;
+            }
+    </style>
+    <script>
+        function mostrarCamposEspecificos() {
+            const especieSelecionada = document.getElementById("especie").value;
+            const camposMamifero = document.getElementById("camposMamifero");
+            const camposReptil = document.getElementById("camposReptil");
+            const camposAve = document.getElementById("camposAve");
+
+            // Oculta todos os campos específicos
+            camposMamifero.style.display = "none";
+            camposReptil.style.display = "none";
+            camposAve.style.display = "none";
+
+            // Mostra os campos específicos com base na espécie selecionada
+            if (especieSelecionada === "Mamifero") {
+                camposMamifero.style.display = "block";
+            } else if (especieSelecionada === "Reptil") {
+                camposReptil.style.display = "block";
+            } else if (especieSelecionada === "Ave") {
+                camposAve.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Cadastro de Animal</h2>
+        <form method="post" asp-action="Create" id="cadastroAnimal">
+            <div class="form-group">
+                <label asp-for="Nome">Nome:</label>
+                <input asp-for="Nome" type="text" id="Nome" name="Nome" required placeholder="">
+            </div>
+
+            <div class="form-group">
+                <label for="especie">Espécie:</label>
+                <select id="especie" name="Especie" class="form-control" onchange="mostrarCamposEspecificos()">
+                    <option value="">Selecione</option>
+                    <option value="Mamifero">Mamífero</option>
+                    <option value="Reptil">Réptil</option>
+                    <option value="Ave">Ave</option>
+                </select>
+            </div>
+
+            <div id="camposMamifero" style="display: none;">
+                <div class="form-group">
+                    <label for="pelagem">Pelagem:</label>
+                    <input type="text" id="pelagem" name="Pelagem" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="tempoGestacao">Tempo de Gestação (dias):</label>
+                    <input type="number" id="tempoGestacao" name="TempoGestacao" class="form-control">
+                </div>
+            </div>
+
+            <div id="camposReptil" style="display: none;">
+                <div class="form-group">
+                    <label for="tipoDeEscamas">Tipo de Escamas:</label>
+                    <input type="text" id="tipoDeEscamas" name="TipoDeEscamas" class="form-control">
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="venenoso" name="Venenoso" class="form-check-input">
+                    <label class="form-check-label" for="venenoso">Venenoso</label>
+                </div>
+            </div>
+
+            <div id="camposAve" style="display: none;">
+                <div class="form-group">
+                    <label for="envergaduraAsa">Envergadura da Asa (cm):</label>
+                    <input type="number" id="envergaduraAsa" name="EnvergaduraAsa" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="tipoBico">Tipo de Bico:</label>
+                    <input type="text" id="tipoBico" name="TipoBico" class="form-control">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Habitat">Habitat:</label>
+                <input asp-for="Habitat" type="text" id="Habitat" name="Habitat">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Idade">Idade:</label>
+                <input asp-for="Idade" type="number" id="Idade" name="Idade" min="0">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Genero">Gênero:</label>
+                <select asp-for="Genero" id="Genero" name="Genero">
+                    <option value="M">Macho</option>
+                    <option value="F">Fêmea</option>
+                    <option value="O">Outro</option>
+                </select>
+            </div>
+
+            <input type="hidden" asp-for="AnimalId" />
+            <button value="Create" type="submit">Cadastrar Animal</button>
+        </form>
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+</body>
